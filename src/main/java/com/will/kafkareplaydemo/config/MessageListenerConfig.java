@@ -1,10 +1,10 @@
-package com.will.kafkareplaydemo;
+package com.will.kafkareplaydemo.config;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MessageListener {
+public class MessageListenerConfig {
 
     @KafkaListener(topics = "${kafka.topic}", groupId = "${kafka.groupId}", containerFactory = "kafkaListenerContainerFactory")
     public void listenGroupMessage(final String message) {

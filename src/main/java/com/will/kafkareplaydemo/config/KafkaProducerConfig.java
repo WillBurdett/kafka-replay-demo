@@ -1,4 +1,4 @@
-package com.will.kafkareplaydemo;
+package com.will.kafkareplaydemo.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
