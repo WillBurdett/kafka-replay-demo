@@ -1,6 +1,8 @@
 package com.will.kafkareplaydemo.controller;
 
+import com.will.kafkareplaydemo.enums.Days;
 import com.will.kafkareplaydemo.model.ExampleEntity;
+import com.will.kafkareplaydemo.utils.JsonUtil;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
@@ -22,16 +25,20 @@ public class KafkaBrokerController {
     private String topic;
 
     @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private KafkaTemplate<String, Object> kafkaTemplate;
 
     @PostMapping(path = "/publish/{message}")
     public void publishMessage(@PathVariable String message){
         kafkaTemplate.send(topic, message);
     }
 
-    @GetMapping(path = "/example")
-    public ExampleEntity getExample(){
-        return new ExampleEntity(List.of("MONDAY"));
+    @GetMapping(path = "/entity")
+    public ExampleEntity getEntity(){
+        return new ExampleEntity(List.of(Days.MONDAY));
+    }
+    @PostMapping(path = "/entity")
+    public void publishEntity(@RequestBody ExampleEntity exampleEntity) throws IOException {
+        kafkaTemplate.send(topic, exampleEntity);
     }
 
     @GetMapping(path = "/replay-all")
@@ -52,7 +59,7 @@ public class KafkaBrokerController {
 
         ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
             for (ConsumerRecord<String, String> record : records) {
-                System.out.println(record.value());
+                System.out.println(record);
             }
             return null;
         }
