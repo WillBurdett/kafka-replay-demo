@@ -1,5 +1,6 @@
 package com.will.kafkareplaydemo.controller;
 
+import com.will.kafkareplaydemo.model.ExampleEntity;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -26,6 +27,11 @@ public class KafkaBrokerController {
     @PostMapping(path = "/publish/{message}")
     public void publishMessage(@PathVariable String message){
         kafkaTemplate.send(topic, message);
+    }
+
+    @GetMapping(path = "/example")
+    public ExampleEntity getExample(){
+        return new ExampleEntity(List.of("MONDAY"));
     }
 
     @GetMapping(path = "/replay-all")
