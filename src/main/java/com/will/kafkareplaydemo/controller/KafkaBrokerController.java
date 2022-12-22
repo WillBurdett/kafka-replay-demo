@@ -1,5 +1,8 @@
 package com.will.kafkareplaydemo.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.will.kafkareplaydemo.enums.Days;
 import com.will.kafkareplaydemo.model.ExampleEntity;
 import com.will.kafkareplaydemo.utils.JsonUtil;
@@ -14,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 @RestController
 public class KafkaBrokerController {
@@ -34,7 +35,7 @@ public class KafkaBrokerController {
 
     @GetMapping(path = "/entity")
     public ExampleEntity getEntity(){
-        return new ExampleEntity(List.of(Days.MONDAY));
+        return new ExampleEntity(Days.MONDAY, "2022-12-12");
     }
     @PostMapping(path = "/entity")
     public void publishEntity(@RequestBody ExampleEntity exampleEntity) throws IOException {
@@ -42,7 +43,7 @@ public class KafkaBrokerController {
     }
 
     @GetMapping(path = "/replay-all")
-    public String listenGroupMessage() {
+    public String listenGroupMessage() throws JsonProcessingException {
         Properties props = new Properties();
         props.setProperty("bootstrap.servers", "localhost:29092");
         props.setProperty("group.id", "test");
@@ -58,8 +59,20 @@ public class KafkaBrokerController {
         consumer.seek(tp, 0L);
 
         ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+        List <ExampleEntity> allExampleEntities = new ArrayList<>();
             for (ConsumerRecord<String, String> record : records) {
-                System.out.println(record);
+                // ObjectMapper instantiation
+                ObjectMapper objectMapper = new ObjectMapper();
+                // Handle LocalDate parsing
+                objectMapper.registerModule(new JavaTimeModule());
+                // Deserialization into the `ExampleEntity` class
+                ExampleEntity exampleEntity = objectMapper.readValue(record.value(), ExampleEntity.class);
+                // Print information
+                allExampleEntities.add(exampleEntity);
+            }
+            Collections.sort(allExampleEntities);
+            for (ExampleEntity e : allExampleEntities){
+                System.out.println(e.toString());
             }
             return null;
         }
