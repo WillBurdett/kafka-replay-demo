@@ -28,15 +28,6 @@ public class KafkaBrokerController {
     @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
 
-    @PostMapping(path = "/publish/{message}")
-    public void publishMessage(@PathVariable String message){
-        kafkaTemplate.send(topic, message);
-    }
-
-    @GetMapping(path = "/entity")
-    public ExampleEntity getEntity(){
-        return new ExampleEntity(Days.MONDAY, "2022-12-12");
-    }
     @PostMapping(path = "/entity")
     public void publishEntity(@RequestBody ExampleEntity exampleEntity) throws IOException {
         kafkaTemplate.send(topic, exampleEntity);
