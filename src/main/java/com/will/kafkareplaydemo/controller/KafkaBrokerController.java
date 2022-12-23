@@ -3,9 +3,7 @@ package com.will.kafkareplaydemo.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.will.kafkareplaydemo.enums.Days;
 import com.will.kafkareplaydemo.model.ExampleEntity;
-import com.will.kafkareplaydemo.utils.JsonUtil;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -18,9 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-
-import static org.apache.kafka.clients.consumer.ConsumerConfig.AUTO_OFFSET_RESET_CONFIG;
 
 @RestController
 public class KafkaBrokerController {
