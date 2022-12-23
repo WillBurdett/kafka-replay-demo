@@ -8,6 +8,15 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
+import org.apache.kafka.common.protocol.Message;
+import org.apache.kafka.common.serialization.Deserializer;
+import org.apache.kafka.common.serialization.Serde;
+import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.streams.StreamsBuilder;
+import org.apache.kafka.streams.Topology;
+import org.apache.kafka.streams.kstream.Consumed;
+import org.apache.kafka.streams.kstream.KStream;
+import org.apache.kafka.streams.kstream.Produced;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -65,4 +74,20 @@ public class KafkaBrokerController {
             Collections.sort(allExampleEntities);
             return allExampleEntities;
         }
+
+    // TODO: 23/12/2022 investigate Kafka stream to map to objects and sort instead
+    // https://developer.confluent.io/tutorials/creating-first-apache-kafka-streams-application/confluent.html
+    // https://www.baeldung.com/spring-boot-kafka-streams
+    static Topology buildTopology(String inputTopic, String outputTopic) {
+        Serde<String> stringSerde = Serdes.String();
+        StreamsBuilder builder = new StreamsBuilder();
+        builder
+                .stream(inputTopic, Consumed.with(stringSerde, stringSerde))
+                .peek((k,v) -> System.out.println("Observed event: {} " + v))
+                .mapValues(s -> s.toUpperCase())
+                .peek((k,v) -> System.out.println("Transformed event: {} " + v))
+                .to(outputTopic, Produced.with(stringSerde, stringSerde));
+        return builder.build();
+    }
 }
+
