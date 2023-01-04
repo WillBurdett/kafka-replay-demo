@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "e9acd079-749e-4032-abf2-a23ea62039ab",
+		"name": "kafka-replay-demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19080486"
+	},
+	"item": [
+		{
+			"name": "Replay messages sequentially",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/replay-all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"replay-all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Publish Monday entity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"dayOfWeek\": \"MONDAY\",\n    \"producerTimestamp\": \"2022-12-12\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/entity",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"entity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Publish Tuesday entity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"dayOfWeek\": \"TUESDAY\",\n    \"producerTimestamp\": \"2022-12-13\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/entity",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"entity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Publish Wednesday entity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"dayOfWeek\": \"WEDNESDAY\",\n    \"producerTimestamp\": \"2022-12-14\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/entity",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"entity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Publish Thursday entity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"dayOfWeek\": \"THURSDAY\",\n    \"producerTimestamp\": \"2022-12-15\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/entity",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"entity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Publish Friday entity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"dayOfWeek\": \"FRIDAY\",\n    \"producerTimestamp\": \"2022-12-16\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/entity",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"entity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Publish Saturday entity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"dayOfWeek\": \"FRIDAY\",\n    \"producerTimestamp\": \"2022-12-16\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/entity",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"entity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Publish Sunday entity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"dayOfWeek\": \"SUNDAY\",\n    \"producerTimestamp\": \"2022-12-18\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/entity",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"entity"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
