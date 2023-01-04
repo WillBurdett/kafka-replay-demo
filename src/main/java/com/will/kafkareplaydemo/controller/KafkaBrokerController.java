@@ -71,20 +71,5 @@ public class KafkaBrokerController {
             Collections.sort(allExampleEntities);
             return allExampleEntities;
         }
-
-    // TODO: 23/12/2022 investigate Kafka stream to map to objects and sort instead
-    // https://developer.confluent.io/tutorials/creating-first-apache-kafka-streams-application/confluent.html
-    // https://www.baeldung.com/spring-boot-kafka-streams
-    static Topology buildTopology(String inputTopic, String outputTopic) {
-        Serde<String> stringSerde = Serdes.String();
-        StreamsBuilder builder = new StreamsBuilder();
-        builder
-                .stream(inputTopic, Consumed.with(stringSerde, stringSerde))
-                .peek((k,v) -> System.out.println("Observed event: {} " + v))
-                .mapValues(s -> s.toUpperCase())
-                .peek((k,v) -> System.out.println("Transformed event: {} " + v))
-                .to(outputTopic, Produced.with(stringSerde, stringSerde));
-        return builder.build();
-    }
 }
 
